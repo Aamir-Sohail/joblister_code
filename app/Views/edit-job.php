@@ -5,10 +5,15 @@ $this->section('title') ?>
 Insertion
 <?php $this->endSection() ?>
 
+
 <?php $this->section('content') ?>
 
 
-
+<?php if(session()->getFlashData('message') !=null):?>
+<div class="alert alert-success">
+  <p><?php echo session()->getFlashData('message') ?></p>
+</div>
+<?php endif; ?>
 
 <h2 class="text-muted">Update a Job Listing</h2>
 <div class="container">

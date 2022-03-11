@@ -1,7 +1,11 @@
 <?= $this->extend('Template/base') ?>
 <?php $this->section('content') ?>
 
-
+<?php if(session()->getFlashData('message') !=null):?>
+<div class="alert alert-success">
+  <p><?php echo session()->getFlashData('message') ?></p>
+</div>
+<?php endif; ?>
 
 
 	<h3>Latest Jobs</h3>
@@ -46,7 +50,7 @@
 
 					<td>
 						<a href="<?= base_url('edit/'.$id) ?>" class="btn btn-success">Edit</a>
-						<a href="<?= base_url('delete'.$id) ?>" class="btn btn-danger">Delete</a>
+						<a href="<?= base_url('delete/'.$id) ?>" class="btn btn-danger">Delete</a>
 
 					</td>
 				</tr>

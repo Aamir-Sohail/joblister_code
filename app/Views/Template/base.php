@@ -26,6 +26,10 @@ use App\Controllers\Home;
             
             <nav>
                 <ul class="nav nav-pills float-right">
+                    <form>
+                    <input type="search" class="nav-link" placeholder="search" name="search">
+                    <button type="button" class="btn btn-danger" type="submit">Search</button>
+                    </form>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('home')?>">Home</a>
                     </li>

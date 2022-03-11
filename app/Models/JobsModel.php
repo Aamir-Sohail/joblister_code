@@ -15,14 +15,13 @@ class JobsModel extends Model
         'salary', 'location', 'contact_user', 'contact_email', 'created_at'
     ];
     protected $useTimestamps = false;
-    // protected $validationRules = [
-    //     'category_id',
-    //     'companyname',
-    //     'job_title',
-    //     'description',
-    //     'salary',
-    //     'location',
-    //     'contact_user',
-    //     'contact_email',
-    // ];
+     protected $validationRules = [
+        'companyname' =>'required',
+         'job_title' =>'required',
+        'description' =>'required|min_length[30]',
+        'salary' =>'required',
+         'location' =>'required',
+         'contact_user' =>'required',
+        'contact_email' =>'required',
+];
 }

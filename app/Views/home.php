@@ -2,8 +2,14 @@
 
 <?php $this->section('content') ?>
 
+<?php if(session()->getFlashData('message') !=null):?>
+<div class="alert alert-success">
+  <p><?php echo session()->getFlashData('message') ?></p>
+</div>
+<?php endif; ?>
 <div class="container">
 	<form action="<?= base_url('home') ?>" method="GET">
+	
 		<div class="jumbotron">
 			<h3>Find a job</h3>
 			<form method="GET" action="index.php">

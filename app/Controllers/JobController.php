@@ -17,7 +17,7 @@ class JobController extends BaseController
 
     public function index()
     {
-
+ 
         $data = $this->jobModel->findAll();
         // var_dump($data);
         // die;
@@ -40,8 +40,13 @@ class JobController extends BaseController
         ];
 
         $this->jobModel->insert($data);
+        // var_dump($data);
+        // die;
+        $this->session->setFlashData('message', "Job Insert Successfully!");
         return redirect()->to('home');
         // var_dump($data);die;
+
+        
     }
 
 
@@ -52,6 +57,8 @@ class JobController extends BaseController
         $data = $this->jobModel->find($id);
         // var_dump($data);
         // die;
+        $this->session->setFlashData('message', "Job View Successfully!");
+        
         return view('view-job', $data);
 
         // return view('view-job');
@@ -61,12 +68,19 @@ class JobController extends BaseController
     {
         // $this->jobModel = new JobsModel();
         $this->jobModel->delete($id);
-        return view('home');
+        $data = $this->jobModel->findAll();
+        // var_dump($data);
+        // die;
+        $this->session->setFlashData('message', "Job Deleted Successfully!");
+
+        return view('home', ['data' => $data]);
     }
     public function edit($id = null)
     {
         // $this->jobModel = new JobsModel();
         $data['jobModel'] = $this->jobModel->find($id);
+        $this->session->setFlashData('message', "Edit Job Successfully!");
+
         return view('edit-job', $data);
     }
     public function updateJob($id)
@@ -85,8 +99,12 @@ class JobController extends BaseController
 
         ];
         $this->jobModel->update($id, $data);
-        // var_dump($data);
+        $data = $this->jobModel->find($id);
+
+        //  var_dump($data);
         // die;
+        $this->session->setFlashData('message', "Update Job Successfully!");
+
         return view('view-job', $data);
     }
 }
