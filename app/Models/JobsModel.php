@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use CodeIgniter\Model;
+use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
 
 class JobsModel extends Model
 {
@@ -15,13 +16,31 @@ class JobsModel extends Model
         'salary', 'location', 'contact_user', 'contact_email', 'created_at'
     ];
     protected $useTimestamps = false;
-     protected $validationRules = [
-        'companyname' =>'required',
-         'job_title' =>'required',
-        'description' =>'required|min_length[30]',
-        'salary' =>'required',
-         'location' =>'required',
-         'contact_user' =>'required',
-        'contact_email' =>'required',
-];
+    protected $validationRules = [
+        'companyname' => 'required',
+        'job_title' => 'required',
+        'description' => 'required|min_length[30]',
+        'salary' => 'required',
+        'location' => 'required',
+        'contact_user' => 'required',
+        'contact_email' => 'required',
+    ];
+    protected $validationMessages = [];
+
+    public function transBegin()
+    {
+
+        return $this->db->transBegin();
+    } 
+
+
+    public function transRollBack()
+    {
+        return $this->db->transRollback();
+    }
+
+    public function transCommit()
+    {
+        return $this->db->transCommit();
+    }
 }

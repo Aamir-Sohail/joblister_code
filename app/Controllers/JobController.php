@@ -17,7 +17,7 @@ class JobController extends BaseController
 
     public function index()
     {
- 
+
         $data = $this->jobModel->findAll();
         // var_dump($data);
         // die;
@@ -26,27 +26,36 @@ class JobController extends BaseController
 
     public function insert()
     {
+        $jobModel = new JobsModel();
+        $jobModel->transBegin();
+        if (!$jobModel->insert($this->request->getPost())) {
+            $this->session->setFlashData('errors', $jobModel->errors());
+            return redirect()->to('home')->withInput();
+        }
+        // $data = [
+        //     'category_id' => $this->request->getPost('category_id'),
+        //     'companyname' => $this->request->getPost('companyname'),
+        //     'job_title' => $this->request->getPost('job_title'),
+        //     'description' => $this->request->getPost('description'),
+        //     'salary' => $this->request->getPost('salary'),
+        //     'location' => $this->request->getPost('location'),
+        //     'contact_user' => $this->request->getPost('contact_user'),
+        //     'contact_email' => $this->request->getPost('contact_email'),
+        // ];
+        // $this->jobModel->insert($data);
+        // $jobModel->transRollBack();
 
-        $data = [
-            'category_id' => $this->request->getPost('category_id'),
-            'companyname' => $this->request->getPost('companyname'),
-            'job_title' => $this->request->getPost('job_title'),
-            'description' => $this->request->getPost('description'),
-            'salary' => $this->request->getPost('salary'),
-            'location' => $this->request->getPost('location'),
-            'contact_user' => $this->request->getPost('contact_user'),
-            'contact_email' => $this->request->getPost('contact_email'),
-
-        ];
-
-        $this->jobModel->insert($data);
         // var_dump($data);
         // die;
+      
+      
+        $jobModel->transCommit();
         $this->session->setFlashData('message', "Job Insert Successfully!");
         return redirect()->to('home');
         // var_dump($data);die;
+        var_dump($jobModel->errors());
 
-        
+
     }
 
 
@@ -58,7 +67,7 @@ class JobController extends BaseController
         // var_dump($data);
         // die;
         $this->session->setFlashData('message', "Job View Successfully!");
-        
+
         return view('view-job', $data);
 
         // return view('view-job');
