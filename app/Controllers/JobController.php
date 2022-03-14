@@ -30,7 +30,7 @@ class JobController extends BaseController
         $jobModel->transBegin();
         if (!$jobModel->insert($this->request->getPost())) {
             $this->session->setFlashData('errors', $jobModel->errors());
-            return redirect()->to('home')->withInput();
+            return redirect()->to('create')->withInput();
         }
         // $data = [
         //     'category_id' => $this->request->getPost('category_id'),
