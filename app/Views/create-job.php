@@ -17,7 +17,7 @@ if (session()->getFlashData('errors') != null) :
     $errors = session()->getFlashData('errors');
 
 endif;
-var_dump($errors);
+// var_dump($errors);
 
 ?>
 

@@ -17,7 +17,13 @@ class JobController extends BaseController
 
     public function index()
     {
-
+      if($this->request->getGet('search')){
+          $search = $this->request->getGet('search');
+          $data =$this->jobModel->like('job_title',$search);
+      }else{
+        // $data = $this->jobModel->findAll();
+               
+      }
         $data = $this->jobModel->findAll();
         // var_dump($data);
         // die;
@@ -116,4 +122,5 @@ class JobController extends BaseController
 
         return view('view-job', $data);
     }
+ 
 }

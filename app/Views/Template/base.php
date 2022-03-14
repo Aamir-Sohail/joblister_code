@@ -29,7 +29,7 @@ use App\Controllers\Home;
                 <ul class="nav nav-pills float-right">
                     <form>
                     <input type="text" class="nav-link"  autocomplete="off" placeholder="Search Here" name="search">
-                    </form>
+                    </form >
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('home')?>">Home</a>
                     </li>
