@@ -17,13 +17,13 @@ class JobController extends BaseController
 
     public function index()
     {
-      if($this->request->getGet('search')){
-          $search = $this->request->getGet('search');
-          $data =$this->jobModel->like('job_title',$search);
-      }else{
-        // $data = $this->jobModel->findAll();
-               
-      }
+        if ($this->request->getGet('search')) {
+            $search = $this->request->getGet('search');
+            $data = $this->jobModel->like('job_title', $search);
+        } else {
+            // $data = $this->jobModel->findAll();
+
+        }
         $data = $this->jobModel->findAll();
         // var_dump($data);
         // die;
@@ -33,7 +33,26 @@ class JobController extends BaseController
     public function insert()
     {
         $jobModel = new JobsModel();
+
+      //  for image upload session... 
+      
+
+      $file = $this->request->getFile('image');
+      $file_type = $file->getClientMimeType();
+      $valid_file_types = array("image/png", "image/jpeg", "image/jpg");
+      $config['max_size'] = 2048;
+      $session = session();
+      if (in_array($file_type, $valid_file_types)) {
+
+          if ($file->isValid() && !$file->hasMoved()) {
+              $imageName = $file->getRandomName();
+              $file->move('uploads/', $imageName);
+              $session->setFlashdata("success", 'file has been uploaded');
+          }
+        
+        
         $jobModel->transBegin();
+        
         if (!$jobModel->insert($this->request->getPost())) {
             $this->session->setFlashData('errors', $jobModel->errors());
             return redirect()->to('create')->withInput();
@@ -53,18 +72,19 @@ class JobController extends BaseController
 
         // var_dump($data);
         // die;
-      
-      
+        
+
         $jobModel->transCommit();
         $this->session->setFlashData('message', "Job Insert Successfully!");
         return redirect()->to('home');
-        // var_dump($data);die;
+        
         var_dump($jobModel->errors());
-
-
+      
+    
+        
     }
 
-
+}
 
 
     public function view_job($id)
@@ -100,27 +120,34 @@ class JobController extends BaseController
     }
     public function updateJob($id)
     {
-        // var_dump($id);
-        // die;
-        $data = [
-            'category_id' => $this->request->getPost('category_id'),
-            'companyname' => $this->request->getPost('companyname'),
-            'job_title' => $this->request->getPost('job_title'),
-            'description' => $this->request->getPost('description'),
-            'salary' => $this->request->getPost('salary'),
-            'location' => $this->request->getPost('location'),
-            'contact_user' => $this->request->getPost('contact_user'),
-            'contact_email' => $this->request->getPost('contact_email'),
+        $jobModel = new JobsModel();
+        $jobModel->transBegin();
+        if (!$jobModel->update($id,$this->request->getPost())) {
+            $this->session->setFlashData('errors', $jobModel->errors());
+            return redirect()->to('create')->withInput();
+        }
+        // $data = [
+        //     'category_id' => $this->request->getPost('category_id'),
+        //     'companyname' => $this->request->getPost('companyname'),
+        //     'job_title' => $this->request->getPost('job_title'),
+        //     'description' => $this->request->getPost('description'),
+        //     'salary' => $this->request->getPost('salary'),
+        //     'location' => $this->request->getPost('location'),
+        //     'contact_user' => $this->request->getPost('contact_user'),
+        //     'contact_email' => $this->request->getPost('contact_email'),
 
-        ];
-        $this->jobModel->update($id, $data);
-        $data = $this->jobModel->find($id);
+        // ];
+        $jobModel->transCommit();
+        $this->session->setFlashData('message', "Job Update Successfully!");
+        return redirect()->to('view-job');
+        // var_dump($data);die;
+        // var_dump($jobModel->errors());
+        // $this->jobModel->update($id, $data);
+        // $data = $this->jobModel->find($id);
 
         //  var_dump($data);
         // die;
-        $this->session->setFlashData('message', "Update Job Successfully!");
-
-        return view('view-job', $data);
+        // $this->session->setFlashData('message', "Update Job Successfully!");
+        // return view('view-job', $data);
     }
- 
 }

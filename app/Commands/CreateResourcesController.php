@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Commands;
-
+use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 

@@ -42,6 +42,8 @@ $routes->get('/home', 'JobController::index');
 $routes->get('/edit/(:num)','JobController::edit/$1');
 $routes->post('edit/(:num)', 'JobController::updateJob/$1');
 $routes->post('search/(:num)', 'JobController::search/$1');
+// Restfull APIS routes......
+$routes->resource('post',['websafe'=>1]); 
 /*
  * --------------------------------------------------------------------
  * Additional Routing

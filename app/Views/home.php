@@ -12,7 +12,7 @@
 	
 		<div class="jumbotron">
 			<h3>Find a job</h3>
-			<form method="GET" action="index.php">
+			<form method="GET" action="">
 				<select name="category" class="form-control">
 					<option value="0">Choose a category</option>
 					<option value="1">
@@ -43,7 +43,6 @@
 
 				<td scope="col">Action</td>
 			</tr>
-
 		</thead>
 		<tbody>
 			<?php foreach ($data as $items) :  ?>
@@ -52,7 +51,6 @@
 
 					<td><?php echo $items['id'] ?></td>
 					<td><?php echo $items['job_title'] ?></td>
-
 					<td><?php echo $items['description'] ?></td>
 
 

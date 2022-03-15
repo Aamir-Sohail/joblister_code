@@ -12,14 +12,16 @@ class JobsModel extends Model
     protected $table = "jobs";
     protected $DBGroup = "default";
     protected $allowedFields = [
-        'category_id', 'companyname', 'job_title', 'description',
+        'category_id', 'companyname', 'job_title','image', 'description',
         'salary', 'location', 'contact_user', 'contact_email', 'created_at'
     ];
     protected $useTimestamps = false;
     protected $validationRules = [
+        'category_id' =>'required',
         'companyname' => 'required',
         'job_title' => 'required',
-        'description' => 'required|min_length[30]',
+        
+        'description' => 'required|min_length[3]',
         'salary' => 'required',
         'location' => 'required',
         'contact_user' => 'required',

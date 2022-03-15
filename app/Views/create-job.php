@@ -17,13 +17,13 @@ if (session()->getFlashData('errors') != null) :
     $errors = session()->getFlashData('errors');
 
 endif;
-// var_dump($errors);
+var_dump($errors);
 
 ?>
 
 <h2 class="text-muted">Create a Job Listing</h2>
 <div class="container">
-    <form action="<?= base_url('/insert') ?>" method="post">
+    <form action="<?= base_url('/insert') ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <div class="form-group">
@@ -40,14 +40,10 @@ endif;
         <div class="form-group">
             <label>Category</label>
             <select type="text" name="category_id" value="<?= old('category_id') ?>" class="form-control input-lg">
-                <?php isset($errors['category_id']) ?>
-                <?php if (isset($errors['category_id'])) : ?>
 
-                    <?php $errors['category_id'] ?>
 
-                <?php endif; ?> ? 'is-invalide' : 'is-valid' ?>
 
-                <option value="0">Choose a category</option>
+                <option value="">Choose a category</option>
                 <option value="1">
                     Business </option>
                 <option value="2">
@@ -58,15 +54,17 @@ endif;
                     Construction </option>
             </select>
 
-            <p class="invalid-feedback d-block">
+            <?php if (isset($errors['category_id'])) : ?>
 
-            </p>
+                <?php echo $errors['category_id'] ?>
+
+            <?php endif; ?>
         </div>
         <div class="form-group">
             <label>Job title</label>
             <input type="text" name="job_title" value="<?= old('job_title') ?>" class="form-control input-lg
             <?php isset($errors['job_title']) ? 'is-invalide' : 'is-valid' ?>">
-           <!-- Error -->
+            <!-- Error -->
             <?php if (isset($errors['job_title'])) : ?>
                 <p class="invalid-feedback d-block">
                     <?php echo $errors['job_title'] ?>
@@ -74,11 +72,18 @@ endif;
 
             <?php endif; ?>
         </div>
+
+        <div class="form-group">
+            <label>Upload Image</label>
+            <input type="file" name="image" class="form-control input-lg">
+            
+        </div>
+
         <div class="form-group">
             <label>Description</label>
             <textarea name="description" value="<?= old('description') ?>" class="form-control input-lg
              <?php isset($errors['description']) ? 'is-invalide' : 'is-valid' ?>"></textarea>
-             <?php if (isset($errors['description'])) : ?>
+            <?php if (isset($errors['description'])) : ?>
                 <p class="invalid-feedback d-block">
                     <?php echo $errors['description'] ?>
                 </p>
@@ -100,7 +105,7 @@ endif;
             <label>Salary</label>
             <input type="number" name="salary" value="<?= old('salary') ?>" class="form-control input-lg
              <?php isset($errors['salary']) ? 'is-invalide' : 'is-valid' ?>">
-             <?php if (isset($errors['salary'])) : ?>
+            <?php if (isset($errors['salary'])) : ?>
                 <p class="invalid-feedback d-block">
                     <?php echo $errors['salary'] ?>
                 </p>

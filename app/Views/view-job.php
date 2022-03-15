@@ -18,6 +18,7 @@
 				<th scope="col">Category_ID</th>
 				<th scope="col">Company Name</th>
 				<td scope="col">Job_Title</td>
+				<td scope="col">Image</td>
 				<td scope="col">Description</td>
 				<td scope="col">Salary</td>
 				<td scope="col">Location</td>
@@ -37,6 +38,7 @@
 					<td><?php echo $category_id ?></td>
 					<td><?php echo $companyname ?></td>
 					<td><?php echo $job_title ?></td>
+					<td><?php echo $image ?></td>
 					<td><?php echo $description?></td>
 					<td><?php echo $salary ?></td>
 					<td><?php echo $location ?></td>
