@@ -38,11 +38,9 @@
 			<td><?php echo $category_id ?></td>
 			<td><?php echo $companyname ?></td>
 			<td><?php echo $job_title ?></td>
-		
 			<td>
-				<img src="<?= "uploads/"?>" height="100px" width="100px" alt="Image">
+				<img src="<?= base_url("uploads/$image")?>" height="100px" width="100px" >
 			</td>
-
 			<td><?php echo $description ?></td>
 			<td><?php echo $salary ?></td>
 			<td><?php echo $location ?></td>
