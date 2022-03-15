@@ -30,61 +30,111 @@ class JobController extends BaseController
         return view('home', ['data' => $data]);
     }
 
+    // public function insert()
+    // {
+    //     $jobModel = new JobsModel();
+
+    // //   //  for image upload session... 
+      
+
+    // //   $file = $this->request->getFile('image');
+    // //   $file_type = $file->getClientMimeType();
+    // //   $valid_file_types = array("image/png", "image/jpeg", "image/jpg");
+    // //   $config['max_size'] = 2048;
+    // //   $session = session();
+    // //   if (in_array($file_type, $valid_file_types)) {
+
+    // //       if ($file->isValid() && !$file->hasMoved()) {
+    // //           $imageName = $file->getRandomName();
+    // //           $file->move('uploads/', $imageName);
+
+    // //         //   var_dump($file);
+    // //         //   die;
+    // //           $session->setFlashdata("success", 'file has been uploaded');
+    // //       }
+        
+        
+    // //     $jobModel->transBegin();
+    // //     // var_dump($this->request->getPost());
+    // //     // die;
+    // //     if (!$jobModel->insert($this->request->getPost())) {
+    // //         $this->session->setFlashData('errors', $jobModel->errors());
+    // //         return redirect()->to('create')->withInput();
+    // //     }
+    //     $data = [
+    //         'category_id' => $this->request->getPost('category_id'),
+    //         'companyname' => $this->request->getPost('companyname'),
+    //         'job_title' => $this->request->getPost('job_title'),
+    //         'description' => $this->request->getPost('description'),
+    //         'salary' => $this->request->getPost('salary'),
+    //         'location' => $this->request->getPost('location'),
+    //         'contact_user' => $this->request->getPost('contact_user'),
+    //         'contact_email' => $this->request->getPost('contact_email'),
+    //     ];
+    //     $this->jobModel->insert($data);
+    // //     // $jobModel->transRollBack();
+
+    // //     // var_dump($data);
+    // //     // die;
+        
+
+    // //     $jobModel->transCommit();
+    //     $this->session->setFlashData('message', "Job Insert Successfully!");
+    //     return redirect()->to('home');
+        
+    //     var_dump($jobModel->errors());
+      
+    
+        
+    // }
+
+    // }
+    
+
     public function insert()
     {
         $jobModel = new JobsModel();
 
-      //  for image upload session... 
-      
 
-      $file = $this->request->getFile('image');
-      $file_type = $file->getClientMimeType();
-      $valid_file_types = array("image/png", "image/jpeg", "image/jpg");
-      $config['max_size'] = 2048;
-      $session = session();
-      if (in_array($file_type, $valid_file_types)) {
+       $jobModel->transBegin();
 
-          if ($file->isValid() && !$file->hasMoved()) {
-              $imageName = $file->getRandomName();
-              $file->move('uploads/', $imageName);
-              $session->setFlashdata("success", 'file has been uploaded');
-          }
-        
-        
-        $jobModel->transBegin();
-        
-        if (!$jobModel->insert($this->request->getPost())) {
-            $this->session->setFlashData('errors', $jobModel->errors());
-            return redirect()->to('create')->withInput();
+        $file = $this->request->getFile('image');
+        $file_type = $file->getClientMimeType();
+        $valid_file_types = array("image/png", "image/jpeg", "image/jpg");
+        $config['max_size'] = 2048;
+        $session = session();
+        if (in_array($file_type, $valid_file_types)) {
+
+            if ($file->isValid() && !$file->hasMoved()) {
+                $imageName = $file->getRandomName();
+                $file->move('uploads/', $imageName);
+            }
         }
-        // $data = [
-        //     'category_id' => $this->request->getPost('category_id'),
-        //     'companyname' => $this->request->getPost('companyname'),
-        //     'job_title' => $this->request->getPost('job_title'),
-        //     'description' => $this->request->getPost('description'),
-        //     'salary' => $this->request->getPost('salary'),
-        //     'location' => $this->request->getPost('location'),
-        //     'contact_user' => $this->request->getPost('contact_user'),
-        //     'contact_email' => $this->request->getPost('contact_email'),
-        // ];
-        // $this->jobModel->insert($data);
-        // $jobModel->transRollBack();
+     
+            $data = [
+                        'category_id' => $this->request->getPost('category_id'),
+                        'companyname' => $this->request->getPost('companyname'),
+                        'job_title' => $this->request->getPost('job_title'),
+                          'image' => $imageName,
+                        'description' => $this->request->getPost('description'),
+                        'salary' => $this->request->getPost('salary'),
+                        'location' => $this->request->getPost('location'),
+                        'contact_user' => $this->request->getPost('contact_user'),
+                        'contact_email' => $this->request->getPost('contact_email'),
+                    
+        ];
+        $jobModel = new JobsModel();
 
-        // var_dump($data);
-        // die;
-        
+        $jobModel->insert($data);
+         $jobModel->transRollBack();
+         $jobModel->transCommit();
 
-        $jobModel->transCommit();
-        $this->session->setFlashData('message', "Job Insert Successfully!");
-        return redirect()->to('home');
-        
-        var_dump($jobModel->errors());
-      
-    
-        
+         $this->session->setFlashData('message', "Job Insert Successfully!");
+             return redirect()->to('home');
+             
+             var_dump($jobModel->errors());
+           
     }
-
-}
 
 
     public function view_job($id)
