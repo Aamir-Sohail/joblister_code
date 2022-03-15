@@ -124,9 +124,12 @@ class JobController extends BaseController
                     
         ];
         $jobModel = new JobsModel();
+         $jobModel->transRollBack();
 
         $jobModel->insert($data);
-         $jobModel->transRollBack();
+        // var_dump($data);
+        // die;
+        
          $jobModel->transCommit();
 
          $this->session->setFlashData('message', "Job Insert Successfully!");
